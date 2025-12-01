@@ -24,12 +24,13 @@ class Safe2:
             # When the new number is negative, we definitely crossed once
             # even if abs(new_number) is less than the number of spots.
             # So if new number is 12 we crossed zero times. But if it's -12 we crossed once.
-            if new_number < 0:
+            # Don't count extra crossing if we started at zero, because that's already been counted previously.
+            if new_number < 0 and self.number != 0:
                 extra_crossings += 1 # -1 means 1 crossing. -101 means 2 crossings.
         else:
             extra_crossings = 0
+        #print(f'{new_number=} {extra_crossings=}')
         self.number = new_number % self.spots
-        print(f'{new_number=} {self.number=}')
         
         total_crossings = extra_crossings
         return total_crossings
