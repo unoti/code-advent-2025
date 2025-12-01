@@ -41,6 +41,7 @@ class TestSafe2(unittest.TestCase):
             #(['R1', 'L2'], 0), # From 50 -> 51 (0 crosses), from 51 -> 49 (zero)
             #(['R50', 'L150'], 2), # 50->0 (1 cross), 0 to 150 (1 cross) = 2
             (['R50', 'L250'], 3), # 50->0 (1 cross), back to 50 with 2 crosses = 3.
+            (['L50', 'R250'], 3), # 50->0 (1 cross), 0 to 50 with 2 crosses = 3. (symmetric to above)
             #(['R100'], 1), # From 50, R100 goes to 50 with 1 cross.
             #(['L50', 'R1'], 1), # 50->0 (1 cross), 0-1 (0 crosses) = 1 cross.
         ]
