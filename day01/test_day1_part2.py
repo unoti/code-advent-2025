@@ -23,4 +23,23 @@ class TestSafe2(unittest.TestCase):
         self.assertListEqual(expected_landings, operator.landings)
 
         self.assertEqual(expected_zero_crossings, zero_crossings)
-    
+
+    def test_multi_scenario_part2(self):
+        scenarios = [
+            # ([instructions], expected_zero_crossings)
+            (['L51', 'R52'], 2),
+            (['L10', 'R90'], 1),
+            (['L151'], 2),
+            (['R151'], 2),
+            (['R100'], 1),
+            (['R150'], 2),
+            (['R250'], 3),
+        ]
+
+        for instructions, expected_crossings in scenarios:
+            with self.subTest(instructions=instructions, expected_crossings=expected_crossings):
+                input_provider = MockInputProvider(instructions)
+                safe = Safe2()
+                operator = SafeOperator2(safe, input_provider)
+                actual_crossings = operator.run()
+                self.assertEqual(expected_crossings, actual_crossings)
