@@ -1,7 +1,7 @@
 import unittest
 from typing import List
 
-from day1 import Safe, InputProvider
+from day1 import Safe, InputProvider, SafeOperator, FileInputProvider
 
 class MockInputProvider(InputProvider):
     def __init__(self, instructions: List[str]):
@@ -62,8 +62,14 @@ class TestSafe(unittest.TestCase):
 
         input_provider = MockInputProvider(example_instructions)
         safe_operator = SafeOperator(self.safe, input_provider)
-        zero_count = operator.run()
+        zero_count = safe_operator.run()
         self.assertEqual(zero_count, 3)
+
+
+class TestInput(unittest.TestCase):
+    def test_input(self):
+        provider = FileInputProvider('day1_input.txt')
+
 
 if __name__ == '__main__':
     unittest.main()

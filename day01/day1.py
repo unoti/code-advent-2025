@@ -25,3 +25,32 @@ class InputProvider(ABC):
     def get_instruction(self) -> Optional[str]:
         ...
 
+
+class FileInputProvider(InputProvider):
+    def __init__(self, filename: str):
+        self.file = open(filename, 'r')
+
+    def get_instruction(self):
+        for line in self.file.readlines():
+            yield line
+        yield None
+
+class SafeOperator:
+    def __init__(self, safe: Safe, input_provider: InputProvider):
+        self.safe = safe
+        self.input_provider = input_provider
+    
+    def run(self) -> int:
+        """Runs the sequence of operations and returns the number of times we landed on 0."""
+        zero_count = 0
+        while True:
+            instruction = self.input_provider.get_instruction()
+            if not instruction:
+                break
+            self.safe.apply_instruction(instruction)
+            print(f'Applied {instruction} to point at {self.safe.number}')
+            if self.safe.number == 0:
+                zero_count += 1
+
+        print(f'Final number {self.safe.number}. Landed on zero {zero_count} times.')
+        return zero_count
