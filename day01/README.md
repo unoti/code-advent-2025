@@ -40,6 +40,11 @@ graph LR
 python -m unittest discover
 ```
 
+To run just one test:
+```
+python -m unittest discover -k test_full_scenario_part2
+```
+
 ## Running the problem
 ```
 python day1.py

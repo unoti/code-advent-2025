@@ -12,9 +12,9 @@ class TestSafe2(unittest.TestCase):
         self.assertEqual(zero_crossings, 1)
         self.assertEqual(self.safe.number, 82)
 
-    def test_full_scenario(self):
+    def test_full_scenario_part2(self):
         """The full example scenario"""
-        instructions = ['L68', 'L30', 'R48', 'L5', 'R60', 'L55', 'L1', 'L99', 'R14', 'L84']
+        instructions = ['L68', 'L30', 'R48', 'L5', 'R60', 'L55', 'L1', 'L99', 'R14', 'L82']
         expected_landings = [82, 52, 0, 95, 55, 0, 99, 0, 14, 32]
         expected_zero_crossings = 6
         input_provider = MockInputProvider(instructions)
