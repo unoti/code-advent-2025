@@ -7,12 +7,9 @@ class MockInputProvider(InputProvider):
     def __init__(self, instructions: List[str]):
         self.instructions = instructions
     
-    def get_instruction(self):
-        if not self.instructions:
-            return None
-        instruction = self.instructions[0]
-        self.instructions = self.instructions[1:]
-        return instruction
+    def all_instructions(self):
+        for instruction in self.instructions:
+            yield instruction
 
 class TestSafe(unittest.TestCase):
     def setUp(self):
@@ -70,11 +67,8 @@ class TestInput(unittest.TestCase):
     def test_input(self):
         provider = FileInputProvider('day1_input.txt')
         all_instructions = []
-        while True:
-            instruction = provider.get_instruction()
-            if not instruction:
-                break
-            all_instructions.append(instruction)
+        all_instructions.extend(provider.all_instructions())
+
         ins1 = all_instructions[0]
         self.assertEqual(ins1, "R45")
 

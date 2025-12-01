@@ -22,18 +22,20 @@ class Safe:
 
 class InputProvider(ABC):
     @abstractmethod
-    def get_instruction(self) -> Optional[str]:
-        ...
+    def all_instructions(self) -> Optional[str]:
+        """A generator that returns each instruction one at a time."""
 
 
 class FileInputProvider(InputProvider):
     def __init__(self, filename: str):
-        self.file = open(filename, 'r')
+        self.filename = filename
 
-    def get_instruction(self):
-        for line in self.file.readlines():
-            yield line
-        yield None
+    def all_instructions(self):
+        with open(self.filename, 'r') as file:
+            for line in file.readlines():
+                instruction = line.strip()
+                yield instruction
+
 
 class SafeOperator:
     def __init__(self, safe: Safe, input_provider: InputProvider):
@@ -43,8 +45,7 @@ class SafeOperator:
     def run(self) -> int:
         """Runs the sequence of operations and returns the number of times we landed on 0."""
         zero_count = 0
-        while True:
-            instruction = self.input_provider.get_instruction()
+        for instruction in self.input_provider.all_instructions():
             if not instruction:
                 break
             self.safe.apply_instruction(instruction)
