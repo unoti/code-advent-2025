@@ -25,8 +25,6 @@ class Safe2:
         self.number = (self.number + sign * units) % self.spots
         
         total_crossings = extra_crossings
-        if self.number == 0:
-            total_crossings += 1
         return total_crossings
 
 
