@@ -69,7 +69,19 @@ class TestSafe(unittest.TestCase):
 class TestInput(unittest.TestCase):
     def test_input(self):
         provider = FileInputProvider('day1_input.txt')
+        all_instructions = []
+        while True:
+            instruction = provider.get_instruction()
+            if not instruction:
+                break
+            all_instructions.append(instruction)
+        ins1 = all_instructions[0]
+        self.assertEqual(ins1, "R45")
 
+        last_instruction = all_instructions[-1]
+        self.assertEqual(last_instruction, 'R48')
+
+        self.assertEqual(len(all_instructions), 4424)
 
 if __name__ == '__main__':
     unittest.main()
