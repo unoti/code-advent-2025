@@ -27,23 +27,23 @@ class TestSafe2(unittest.TestCase):
     def test_multi_scenario_part2(self):
         scenarios = [
             # ([instructions], expected_zero_crossings)
-            #(['L51', 'R52'], 2),
-            #(['L10', 'R90'], 1),
-            #(['L151'], 2),
-            #(['R151'], 2),
-            #(['R100'], 1),
-            #(['R200'], 2),
-            #(['R150'], 2),
-            #(['R250'], 3),
-            #(['L350'], 4),
-            #(['R350'], 4), # 3 crossings for the 300, an extra crossing for the 50.
-            #(['R50', 'L10'], 1),  # 50 -> 0 (crosses once to zero), 0 -> 90 (stays on same side, no crossing)
-            #(['R1', 'L2'], 0), # From 50 -> 51 (0 crosses), from 51 -> 49 (zero)
-            #(['R50', 'L150'], 2), # 50->0 (1 cross), 0 to 150 (1 cross) = 2
+            (['L51', 'R52'], 2),
+            (['L10', 'R90'], 1),
+            (['L151'], 2),
+            (['R151'], 2),
+            (['R100'], 1),
+            (['R200'], 2),
+            (['R150'], 2),
+            (['R250'], 3),
+            (['L350'], 4),
+            (['R350'], 4), # 3 crossings for the 300, an extra crossing for the 50.
+            (['R50', 'L10'], 1),  # 50 -> 0 (crosses once to zero), 0 -> 90 (stays on same side, no crossing)
+            (['R1', 'L2'], 0), # From 50 -> 51 (0 crosses), from 51 -> 49 (zero)
+            (['R50', 'L150'], 2), # 50->0 (1 cross), 0 to 150 (1 cross) = 2
             (['R50', 'L250'], 3), # 50->0 (1 cross), back to 50 with 2 crosses = 3.
             (['L50', 'R250'], 3), # 50->0 (1 cross), 0 to 50 with 2 crosses = 3. (symmetric to above)
-            #(['R100'], 1), # From 50, R100 goes to 50 with 1 cross.
-            #(['L50', 'R1'], 1), # 50->0 (1 cross), 0-1 (0 crosses) = 1 cross.
+            (['R100'], 1), # From 50, R100 goes to 50 with 1 cross.
+            (['L50', 'R1'], 1), # 50->0 (1 cross), 0-1 (0 crosses) = 1 cross.
         ]
 
         for instructions, expected_crossings in scenarios:

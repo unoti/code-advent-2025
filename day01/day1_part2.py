@@ -26,17 +26,21 @@ class Safe2:
         full_rotations = units // self.spots # units are always positive, so we avoid special math on negatives.
         partial_movement = units % self.spots # Remaining movement after full rotations.
         new_number = (self.number + sign * units) % self.spots
-        if sign > 0:
-            # > not >=1 because exact multiples are counted in full_rotations.
-            partial_crossing = self.number + partial_movement > self.spots 
+        # Partial crossing detection
+        if self.number == 0:
+            # If we started at zero we don't count a partial crossing because it was counted last round.
+            partial_crossing = False
+        elif sign > 0:
+            # >= because we need to catch landing right on the boundary.
+            partial_crossing = self.number + partial_movement >= self.spots 
         else:
-            # is it enough to go over the edge? >= used because landing on zero counts as a crossing.
+            # is it enough to go over the edge? >= to catch landing right on the boundary.
             partial_crossing = partial_movement >= self.number
         zero_crosses = full_rotations
         if partial_crossing:
             zero_crosses += 1
 
-        #print(f'{units=} {new_number=} {sign=} {full_rotations=} {partial_movement=} {partial_crossing=}')
+        print(f'{units=} {new_number=} {sign=} {full_rotations=} {partial_movement=} {partial_crossing=}')
         self.number = new_number
         return zero_crosses
 
