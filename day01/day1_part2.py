@@ -10,6 +10,8 @@ class Safe2:
         """Apply an instruction and return how many times we crossed zero."""
         direction = instruction[0]
         units = int(instruction[1:])
+        if not units:
+            raise ValueError(f'Invalid unit {units}')
         if direction not in ['L', 'R']:
             raise ValueError(f'Instruction {instruction} is not valid')
 
@@ -18,22 +20,24 @@ class Safe2:
         else:
             sign = 1
 
-        new_number = self.number + sign * units
-        if new_number < 0 or new_number >= self.spots:
-            extra_crossings = abs(new_number) // self.spots
-            # When the new number is negative, we definitely crossed once
-            # even if abs(new_number) is less than the number of spots.
-            # So if new number is 12 we crossed zero times. But if it's -12 we crossed once.
-            # Don't count extra crossing if we started at zero, because that's already been counted previously.
-            if new_number < 0 and self.number != 0:
-                extra_crossings += 1 # -1 means 1 crossing. -101 means 2 crossings.
+        # Python's // operator works interestingly with negative numbers.
+        # 10 // 3 = 3, but -10 // 3 = -4.  Good times, good times.
+
+        full_rotations = units // self.spots # units are always positive, so we avoid special math on negatives.
+        partial_movement = units % self.spots # Remaining movement after full rotations.
+        new_number = (self.number + sign * units) % self.spots
+        if sign > 0:
+            partial_crossing = self.number + partial_movement >= self.spots
         else:
-            extra_crossings = 0
-        #print(f'{new_number=} {extra_crossings=}')
-        self.number = new_number % self.spots
-        
-        total_crossings = extra_crossings
-        return total_crossings
+            partial_crossing = self.number - partial_movement < 0
+        zero_crosses = full_rotations
+        if partial_crossing:
+            zero_crosses += 1
+        if new_number == 0:
+            zero_crosses += 1
+
+        self.number = new_number
+        return zero_crosses
 
 
 class SafeOperator2:
