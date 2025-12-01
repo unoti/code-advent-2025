@@ -46,8 +46,6 @@ class SafeOperator:
         """Runs the sequence of operations and returns the number of times we landed on 0."""
         zero_count = 0
         for instruction in self.input_provider.all_instructions():
-            if not instruction:
-                break
             self.safe.apply_instruction(instruction)
             print(f'Applied {instruction} to point at {self.safe.number}')
             if self.safe.number == 0:
