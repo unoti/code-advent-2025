@@ -49,3 +49,8 @@ python -m unittest discover -k test_full_scenario_part2
 ```
 python day1.py
 ```
+
+Part 2:
+```
+python day1_part2.py
+```

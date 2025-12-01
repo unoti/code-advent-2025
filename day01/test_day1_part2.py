@@ -32,8 +32,11 @@ class TestSafe2(unittest.TestCase):
             (['L151'], 2),
             (['R151'], 2),
             (['R100'], 1),
+            (['R200'], 2),
             (['R150'], 2),
             (['R250'], 3),
+            (['L350'], 4),
+            (['R350'], 4), # 3 crossings for the 300, an extra crossing for the 50.
         ]
 
         for instructions, expected_crossings in scenarios:

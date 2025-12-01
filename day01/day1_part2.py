@@ -1,4 +1,4 @@
-from day1 import InputProvider
+from day1 import InputProvider, FileInputProvider
 
 
 class Safe2:
@@ -18,15 +18,21 @@ class Safe2:
         else:
             sign = 1
 
-        extra_crossings = abs(units) // self.spots
         new_number = self.number + sign * units
         if new_number < 0 or new_number >= self.spots:
-            extra_crossings += 1
-        self.number = (self.number + sign * units) % self.spots
+            extra_crossings = abs(new_number) // self.spots
+            # When the new number is negative, we definitely crossed once
+            # even if abs(new_number) is less than the number of spots.
+            # So if new number is 12 we crossed zero times. But if it's -12 we crossed once.
+            if new_number < 0:
+                extra_crossings += 1 # -1 means 1 crossing. -101 means 2 crossings.
+        else:
+            extra_crossings = 0
+        self.number = new_number % self.spots
+        print(f'{new_number=} {self.number=}')
         
         total_crossings = extra_crossings
         return total_crossings
-
 
 
 class SafeOperator2:
@@ -39,10 +45,21 @@ class SafeOperator2:
         """Runs the sequence of operations and returns the number of times we landed on or crossed 0."""
         zero_count = 0
         for instruction in self.input_provider.all_instructions():
+            origin = self.safe.number
             crossings = self.safe.apply_instruction(instruction)
-            print(f'Applied {instruction} to point at {self.safe.number} with {crossings} crossings')
+            print(f'Applied {instruction} from {origin} to {self.safe.number} with {crossings} crossings')
             zero_count += crossings
             self.landings.append(self.safe.number) # For unit tests
 
         print(f'Final number {self.safe.number}. Crossed zero {zero_count} times.')
         return zero_count
+
+def main():
+    input_provider = FileInputProvider('day1_input.txt')
+    safe = Safe2()
+    operator = SafeOperator2(safe, input_provider)
+    zero_count = operator.run()
+    print(f'Answer: {zero_count}')
+
+if __name__ == '__main__':
+    main()
