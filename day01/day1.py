@@ -55,3 +55,14 @@ class SafeOperator:
 
         print(f'Final number {self.safe.number}. Landed on zero {zero_count} times.')
         return zero_count
+
+
+def main():
+    input_provider = FileInputProvider('day1_input.txt')
+    safe = Safe()
+    operator = SafeOperator(safe, input_provider)
+    zero_count = operator.run()
+    print(f'Answer: {zero_count}')
+
+if __name__ == '__main__':
+    main()
