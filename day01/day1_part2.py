@@ -40,7 +40,7 @@ class Safe2:
         if partial_crossing:
             zero_crosses += 1
 
-        print(f'{units=} {new_number=} {sign=} {full_rotations=} {partial_movement=} {partial_crossing=}')
+        #print(f'{units=} {new_number=} {sign=} {full_rotations=} {partial_movement=} {partial_crossing=}')
         self.number = new_number
         return zero_crosses
 
