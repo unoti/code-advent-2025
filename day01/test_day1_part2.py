@@ -21,3 +21,6 @@ class TestSafe2(unittest.TestCase):
         operator = SafeOperator2(self.safe, input_provider)
         zero_crossings = operator.run()
         self.assertListEqual(expected_landings, operator.landings)
+
+        self.assertEqual(expected_zero_crossings, zero_crossings)
+    
