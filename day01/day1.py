@@ -19,6 +19,7 @@ class Safe:
         
         self.number = (self.number + sign * units) % self.spots
 
+
 class InputProvider(ABC):
     @abstractmethod
     def get_instruction(self) -> Optional[str]:
