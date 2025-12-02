@@ -29,9 +29,7 @@ def id_is_valid_multi(id: int) -> bool:
         check_part = id_str[:check_len]
         repeats = id_len // check_len
         repeated = int(check_part * repeats) # This repeats like 12 * 2 = 1212
-        #print(f'{id=} {id_str=} {id_len=} {check_len=} {check_part=} {repeats=} {repeated=}')
         if repeated == id:
-            #print(f'  invalid {id=}')
             return False
     return True
 
@@ -45,7 +43,6 @@ def id_is_valid(id: int) -> bool:
     id_len = len(id_str)
     half_len = id_len // 2
     if id_len / 2 != half_len:
-        # Must be an even length.
         return True
     half = id_str[:half_len]
     repeated = half * 2
