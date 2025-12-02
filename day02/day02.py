@@ -6,4 +6,8 @@ def get_ranges(sequences: str) -> Iterable[int]:
     11, 12, 13, 14, 23, 24, 25, 26
     """
     for sequence_str in sequences.split(','):
-        ...
+        start_str, end_str = sequence_str.split('-')
+        start = int(start_str)
+        end = int(end_str) + 1 # End is inclusive.
+        for num in range(start, end):
+            yield num
