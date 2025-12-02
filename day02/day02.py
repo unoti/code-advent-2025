@@ -10,13 +10,15 @@ def get_ranges(sequences: str) -> Iterable[int]:
         start_str, end_str = sequence_str.split('-')
         start = int(start_str)
         end = int(end_str) + 1 # End is inclusive.
+        print(f'sequence {start=} {end=}')
         for num in range(start, end):
             yield num
 
 
-def id_is_valid(id: int) -> bool:
+def id_is_valid_multi(id: int) -> bool:
     """Checks if an id is valid. It is invalid if it is made of repetitions.
     For example, 123 is fine. 11 is not, 1212 is not, 123123 is not.
+    This variation detects repeats any number of times, not just twice.
     :returns: True if the id is valid, False if it is invalid.
     """
     id_str = str(id)
@@ -27,7 +29,26 @@ def id_is_valid(id: int) -> bool:
         repeated = int(check_part * repeats) # This repeats like 12 * 2 = 1212
         #print(f'{id=} {id_str=} {id_len=} {check_len=} {check_part=} {repeats=} {repeated=}')
         if repeated == id:
+            #print(f'  invalid {id=}')
             return False
+    return True
+
+
+def id_is_valid(id: int) -> bool:
+    """Checks if an id is valid. It is invalid if it is made of a string repeated twice.
+    For example, 123 is fine. 11 is not, 1212 is not, 123123 is not.
+    :returns: True if the id is valid, False if it is invalid.
+    """
+    id_str = str(id)
+    id_len = len(id_str)
+    half_len = id_len // 2
+    if id_len / 2 != half_len:
+        # Must be an even length.
+        return True
+    half = id_str[:half_len]
+    repeated = half * 2
+    if id_str == repeated:
+        return False
     return True
 
 
@@ -39,11 +60,25 @@ def sum_invalid_ids(range_str: str) -> int:
     return sum(find_invalid_ids(range_str))
 
 
-def main():
+def dianostics():
+    sequences = '194-253,81430782-81451118'
+    total = 0
+    for id in find_invalid_ids(sequences):
+        total += id
+        print(f'   {total=} {id=}')
+    sum_of_invalid = sum_invalid_ids(sequences)
+    print(f'{sum_of_invalid=}')
+
+
+def get_input():
     with open('day2_input.txt', 'r') as f:
         line = f.read()
         sequences = line.strip()
-    sum_of_invalid = sum_invalid_ids(sequences)
+    return sequences
+
+
+def main():
+    sum_of_invalid = sum_invalid_ids(get_input())
     print(f'{sum_of_invalid=}')
 
 
