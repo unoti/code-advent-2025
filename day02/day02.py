@@ -1,3 +1,5 @@
+import argparse
+import sys
 from typing import Iterable
 
 
@@ -52,12 +54,12 @@ def id_is_valid(id: int) -> bool:
     return True
 
 
-def find_invalid_ids(range_str: str) -> Iterable[int]:
-    return filter(lambda x: not id_is_valid(x), get_ranges(range_str))
+def find_invalid_ids(range_str: str, valid_detector=id_is_valid) -> Iterable[int]:
+    return filter(lambda x: not valid_detector(x), get_ranges(range_str))
 
 
-def sum_invalid_ids(range_str: str) -> int:
-    return sum(find_invalid_ids(range_str))
+def sum_invalid_ids(range_str: str, valid_detector=id_is_valid) -> int:
+    return sum(find_invalid_ids(range_str, valid_detector=valid_detector))
 
 
 def dianostics():
@@ -77,10 +79,18 @@ def get_input():
     return sequences
 
 
-def main():
-    sum_of_invalid = sum_invalid_ids(get_input())
+def main(valid_detector=id_is_valid):
+    sum_of_invalid = sum_invalid_ids(get_input(), valid_detector=valid_detector)
     print(f'{sum_of_invalid=}')
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Advent of Code Day 2: Find invalid product IDs')
+    parser.add_argument('--part', type=int, choices=[1, 2], default=1,
+                        help='Which part of the challenge to solve (default: 1)')
+    args = parser.parse_args()
+    
+    if args.part == 2:
+        main(valid_detector=id_is_valid_multi)
+    else:
+        main()
